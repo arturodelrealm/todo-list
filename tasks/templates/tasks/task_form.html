@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Editar tarea{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h2 class="mb-3">{% if form.instance.pk %}Editar{% else %}Nueva{% endif %} tarea</h2>
+
+    <form method="post" class="card p-4 shadow-sm">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Título</label>
+        {% render_field form.title class="form-control" placeholder="Escribe el nombre de la tarea" %}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        {% render_field form.description class="form-control" rows="3" placeholder="Agrega más detalles de la tarea" %}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Fecha de vencimiento</label>
+        {% render_field form.due_date class="form-control" type="date" %}
+      </div>
+
+      {% if form.instance.pk %}
+      <div class="mb-3">
+        <label class="form-label">Fecha de creación</label>
+        <input type="text" class="form-control" value="{{ form.instance.created_at|date:'d/m/Y H:i' }}" readonly>
+      </div>
+      {% endif %}
+
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-success">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

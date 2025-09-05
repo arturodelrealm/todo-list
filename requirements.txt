@@ -1,0 +1,7 @@
+Django>=5.0
+django-widget-tweaks
+psycopg2-binary
+gunicorn
+requests
+result
+whitenoise
