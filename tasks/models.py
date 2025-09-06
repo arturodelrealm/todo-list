@@ -29,6 +29,11 @@ class Task(models.Model):
         self.completed_at = datetime.now()
         self.save()
 
+    def decomplete(self):
+        self.completed = False
+        self.completed_at = None
+        self.save()
+
     def is_overdue(self):
         if self.completed:
             return False

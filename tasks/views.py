@@ -53,6 +53,14 @@ def task_delete(request, pk):
 def task_complete(request, pk):
     task_service = TaskVisibilityService(request.user)
     task = task_service.get_object_or_404(pk=pk)
-    if not task.complete():
+    if not task.completed:
         task.complete()
+    return redirect('task_list')
+
+@login_required
+def task_decomplete(request, pk):
+    task_service = TaskVisibilityService(request.user)
+    task = task_service.get_object_or_404(pk=pk)
+    if task.completed:
+        task.decomplete()
     return redirect('task_list')

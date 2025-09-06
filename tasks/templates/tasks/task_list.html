@@ -30,9 +30,13 @@
 
         <td>
           {% if task.completed %}
-            <button type="submit" class="btn btn-sm btn-success">
-              ✔
-            </button>
+            <form method="post" action="{% url 'task_decomplete' task.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-success">
+                ✔
+              </button>
+            </form>
+
           {% else %}
           <form method="post" action="{% url 'task_complete' task.id %}">
             {% csrf_token %}
@@ -46,7 +50,6 @@
         <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
         <td>{{ task.due_date|date:"Y-m-d" }}</td>
         <td>
-
           <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">🗑</a>
         </td>
       </tr>
