@@ -55,12 +55,9 @@ def task_update(request, pk):
 def task_delete(request, pk):
     task_service = TaskVisibilityService(request.user)
     task = task_service.get_object_or_404(pk=pk)
-    if request.method == "POST":
-        task.delete()
-        messages.success(request, 'Tarea eliminada con éxito.')
-        return redirect('task_list')
-    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
-
+    task.delete()
+    messages.success(request, 'Tarea eliminada con éxito.')
+    return redirect('task_list')
 
 @login_required
 def task_complete(request, pk):

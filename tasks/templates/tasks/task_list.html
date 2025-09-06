@@ -30,12 +30,16 @@
 
         <td>
           {% if task.completed %}
-            <form method="post" action="{% url 'task_decomplete' task.id %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-success">
-                ✔
-              </button>
-            </form>
+            <button
+              class="btn btn-sm btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmModal"
+              data-title="Marcar como no completada"
+              data-body="¿Estás seguro de que quieres marcar como no completada la tarea '{{ task.title }}'?"
+              data-url="{% url 'task_decomplete' task.pk %}"
+              data-submit="Descompletar">
+              ✔
+            </button>
 
           {% else %}
           <form method="post" action="{% url 'task_complete' task.id %}">
@@ -50,7 +54,16 @@
         <td>{{ task.created_at|date:"Y-m-d H:i" }}</td>
         <td>{{ task.due_date|date:"Y-m-d" }}</td>
         <td>
-          <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">🗑</a>
+          <button
+            class="btn btn-sm btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#confirmModal"
+            data-title="Eliminar tarea"
+            data-body="¿Estás seguro de que quieres eliminar la tarea '{{ task.title }}'?"
+            data-url="{% url 'task_delete' task.pk %}"
+            data-submit="Eliminar">
+            🗑
+          </button>
         </td>
       </tr>
     {% endfor %}
