@@ -26,10 +26,27 @@
       </div>
 
       {% if form.instance.pk %}
-      <div class="mb-3">
-        <label class="form-label">Fecha de creación</label>
-        <input type="text" class="form-control" value="{{ form.instance.created_at|date:'d/m/Y H:i' }}" readonly>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Creada por</label>
+          <input type="text" class="form-control" value="{{ form.instance.user.username }}" readonly>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tiempo estimado</label>
+          {% render_field form.time_estimate class="form-control" %}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Fecha de creación</label>
+          <input type="text" class="form-control" value="{{ form.instance.created_at|date:'d/m/Y H:i' }}" readonly>
+        </div>
+
+        {% if form.instance.completed %}
+          <div class="mb-3">
+            <label class="form-label">Fecha de completación</label>
+            <input type="text" class="form-control" value="{{ form.instance.completed_at|date:'d/m/Y H:i' }}" readonly>
+          </div>
+        {% endif %}
       {% endif %}
 
       <div class="d-flex justify-content-between">
