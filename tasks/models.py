@@ -17,7 +17,7 @@ class Task(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    time_estimate = models.TextField(blank=True)
+    time_estimate = models.TextField(null=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

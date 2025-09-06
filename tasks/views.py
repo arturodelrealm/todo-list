@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+from services.llm.tasks.time_estimate.hugging_face import HuggingFaceEstimate
 from .forms import TaskForm
 from .services import TaskVisibilityService
 
@@ -19,6 +21,11 @@ def task_create(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
+
+            task.time_estimate = HuggingFaceEstimate().estimate(
+                task.title,
+                task.description
+            )
             task.save()
             messages.success(request, 'Tarea creada con éxito!')
             return redirect('task_list')
