@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Task(models.Model):
@@ -26,7 +27,7 @@ class Task(models.Model):
 
     def complete(self):
         self.completed = True
-        self.completed_at = datetime.now()
+        self.completed_at = timezone.now()
         self.save()
 
     def decomplete(self):
@@ -37,13 +38,13 @@ class Task(models.Model):
     def is_overdue(self):
         if self.completed:
             return False
-        today = datetime.now().date()
+        today = timezone.now().date()
         return self.due_date and self.due_date < today
 
     def is_due_soon(self):
         if self.completed:
             return False
-        today = datetime.now().date()
+        today = timezone.now().date()
         return self.due_date and \
            today <= self.due_date <= \
            today + timedelta(days=self.DAY_TO_DUES_SOON)
