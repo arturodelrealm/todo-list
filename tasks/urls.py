@@ -10,6 +10,5 @@ urlpatterns = [
     path(
         '<int:pk>/decomplete/',
         views.task_decomplete,
-        name='task_decomplete')
-    ,
+        name='task_decomplete'),
 ]
